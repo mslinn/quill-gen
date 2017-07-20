@@ -1,11 +1,11 @@
-# QuillGen
+<img src='https://raw.githubusercontent.com/mslinn/quill-cache/media/quill-cache.jpg' align='right' width='33%'>
 
 [![Build Status](https://travis-ci.org/mslinn/quill-gen.svg?branch=master)](https://travis-ci.org/mslinn/quill-gen)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fquill-gen.svg)](https://badge.fury.io/gh/mslinn%2Fquill-gen)
 
 A code generator for [quill-cache](https://github.com/mslinn/quill-cache/) DAOs.
 
-## Running
+## How to Use QuillGen
 Download this project and run it like this:
 
     $ git clone https://github.com/mslinn/quill-gen.git
