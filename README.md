@@ -29,7 +29,7 @@ Example usages:
    ```
    bin/run Blah                            
    ```
- * Write generated DAOs for `Blah`, `Foo` and `Bar` to `target/quillGen//model/dao/{Blahs,Foos,Bars}.scala` 
+ * Write generated DAOs for `Blah`, `Foo` and `Bar` to `target/quillGen/model/dao/{Blahs,Foos,Bars}.scala` 
    ```
    bin/run Blah Foo Bar
    ```
@@ -41,7 +41,7 @@ Example usages:
    ```
    bin/run -d src/main/scala/ -p "" Blah
    ```
- * Write generated DAO for `Blah` to `target/quillGen//Blahs.scala`
+ * Write generated DAO for `Blah` to `target/quillGen/Blahs.scala`
    ```
    bin/run -p "" Blah
    ```
