@@ -1,0 +1,28 @@
+<configuration debug="${LOGGER_DEBUG:-false}">
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- # level of
+       # request         effective level q
+       #         TRACE  DEBUG INFO  WARN  ERROR OFF
+       # TRACE    YES   NO    NO    NO    NO    NO
+       # DEBUG    YES   YES   NO    NO    NO    NO
+       # INFO     YES   YES   YES   NO    NO    NO
+       # WARN     YES   YES   YES   YES   NO    NO
+       # ERROR    YES   YES   YES   YES   YES   NO
+       # See http://logback.qos.ch/manual/architecture.html
+
+       For example, if a logger is set to DEBUG, then the following produces output:
+       Logger.info, Logger.debug, Logger.warn
+
+       CAUTION: If you specify WARNING instead of WARN then the value DEBUG is used!!!! -->
+  <logger name="application"                           level="${LOGGER_APP:-WARN}" />
+  <logger name="akka"                                  level="${LOGGER_AKKA:-WARN}" />
+
+  <root level="${LOGGER_ROOT:-WARN}">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
