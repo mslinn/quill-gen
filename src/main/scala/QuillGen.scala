@@ -32,14 +32,23 @@ object QuillGen extends App {
     help("help").text("prints this usage text")
 
     note(s"""
-            |Generated quill-cache DAOs.
+            |Generate quill-cache DAOs.
             |
-            |Example usage:
-            |  quillGen Blah                            // Write generated DAO for Blah to ${ defaultOptions.outputDir }/${ defaultOptions.packageDir }Blahs.scala
-            |  quillGen Blah Foo Bar                    // Write generated DAOs for Blah, Foo and Bar to ${ defaultOptions.outputDir }/${ defaultOptions.packageDir }{Blah,Foo,Bar}.scala
-            |  quillGen -d src/main/scala/ Blah         // Write generated DAO for Blah.scala to src/main/scala/${ defaultOptions.packageDir }
-            |  quillGen -d src/main/scala/ -p "" Blah   // Write generated DAO for Blah to src/main/scala/Blah.scala
-            |  quillGen -p "" Blah                      // Write generated DAO for Blah to ${ defaultOptions.outputDir }/Blah/scala
+            |Example usages using the included bin/run script:
+            |  - Write generated DAO for Blah to ${ defaultOptions.outputDir }${ defaultOptions.packageDir }Blahs.scala
+            |    $$ bin/run Blah
+            |
+            |  - Write generated DAOs for Blah, Foo and Bar to ${ defaultOptions.outputDir }${ defaultOptions.packageDir }{Blahs,Foos,Bars}.scala
+            |    $$ bin/run Blah Foo Bar
+            |
+            |  - Write generated DAO for Blah.scala to src/main/scala/${ defaultOptions.packageDir }
+            |    $$ bin/run -d src/main/scala/ Blah
+            |
+            |  - Write generated DAO for Blah to src/main/scala/Blahs.scala
+            |    $$ bin/run -d src/main/scala/ -p "" Blah
+            |
+            |  - Write generated DAO for Blah to ${ defaultOptions.outputDir }Blahs.scala
+            |    $$ bin/run -p "" Blah
             |""".stripMargin)
   }
 
