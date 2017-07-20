@@ -25,7 +25,7 @@ Usage: quillGen [options] Class1, Class2, etc
 ```
 
 Example usages:
- * Write generated DAO for Blah to `target/quillGen/model/dao/Blahs.scala`
+ * Write generated DAO for `Blah` to `target/quillGen/model/dao/Blahs.scala`
    ```
    bin/run Blah                            
    ```
@@ -33,7 +33,7 @@ Example usages:
    ```
    bin/run Blah Foo Bar
    ```
- * Write generated DAO for Blah.scala to `src/main/scala/model/dao/`
+ * Write generated DAO for `Blah` to `src/main/scala/model/dao/Blahs.scala`
    ```
    bin/run -d src/main/scala/ Blah
    ```
