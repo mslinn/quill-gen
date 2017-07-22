@@ -4,7 +4,8 @@ import quill_gen.BuildInfo
 case class ProgramOptions(
   outputDir: String = "target/quillGen/", //"src/main/scala/",
   packageName: String = "model.dao",
-  classNames: List[String] = Nil
+  classNames: List[String] = Nil,
+  cacheType: CacheType = CacheType.STRONG
 ) {
   val packageDir: String = {
     val x = packageName.replace(".", "/")
@@ -24,6 +25,19 @@ object QuillGen extends App {
     opt[String]('d', "outputDir")
       .action((value, programOptions) => programOptions.copy(outputDir = value))
       .text(s"Directory to write generated quill-cache DAOs to (defaults to ${ defaultOptions.outputDir })")
+
+    opt[String]('c', "cache")
+      .validate( string =>
+        try {
+          CacheType.valueOf(string.toUpperCase)
+          Right(Unit)
+        } catch {
+          case _: Throwable =>
+            Left(s"Cache values are case insensitive. Valid cache values are ${ CacheType.NONE }, ${ CacheType.SOFT } and ${ CacheType.STRONG }")
+        }
+      )
+      .action((value, programOptions) => programOptions.copy(cacheType = CacheType.valueOf(value.toUpperCase)))
+      .text(s"Type of cache for the DAOs being created (case insensitive, can be ${ CacheType.NONE }, ${ CacheType.SOFT } or ${ CacheType.STRONG }, defaults to ${ CacheType.STRONG })")
 
     arg[String]("Class1, Class2, etc")
       .action((value, programOptions) => programOptions.copy(classNames = value.trim.split(" ").toList))

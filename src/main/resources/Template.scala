@@ -1,18 +1,18 @@
-package model.dao
+package $package
 
-import model.{Ctx, Template}
+import model.Ctx
+import model.$className
 import model.persistence._
 import model.persistence.Types.IdOptionLong
 
-object Templates extends CachedPersistence[Long, Option[Long], Template]
-    with StrongCacheLike[Long, Option[Long], Template] {
+object $classNames extends $extend {
   import Ctx._
 
-  @inline def _findAll: List[Template] = run { quote { query[Template] } }
+  @inline def _findAll: List[$className] = run { quote { query[$className] } }
 
-  val queryById: IdOptionLong => Quoted[EntityQuery[Template]] =
+  val queryById: IdOptionLong => Quoted[EntityQuery[$className]] =
     (id: IdOptionLong) =>
-      quote { query[Template].filter(_.id == lift(id)) }
+      quote { query[$className].filter(_.id == lift(id)) }
 
   val _deleteById: (IdOptionLong) => Unit =
     (id: IdOptionLong) => {
@@ -20,14 +20,14 @@ object Templates extends CachedPersistence[Long, Option[Long], Template]
       ()
     }
 
-  val _findById: IdOptionLong => Option[Template] =
+  val _findById: IdOptionLong => Option[$className] =
     (id: Id[Option[Long]]) =>
       run { quote { queryById(id) } }.headOption
 
-  val _insert: Template => Template =
-    (user: Template) => {
+  val _insert: $className => $className =
+    (user: $className) => {
       val id: Id[Option[Long]] = try {
-        run { quote { query[Template].insert(lift(user)) }.returning(_.id) }
+        run { quote { query[$className].insert(lift(user)) }.returning(_.id) }
       } catch {
         case e: Throwable =>
           logger.error(e.getMessage)
@@ -36,12 +36,12 @@ object Templates extends CachedPersistence[Long, Option[Long], Template]
       user.setId(id)
     }
 
-  val _update: Template => Template =
-    (user: Template) => {
+  val _update: $className => $className =
+    (user: $className) => {
       run { queryById(user.id).update(lift(user)) }
       user
     }
 
-  @inline override def findById(id: IdOptionLong): Option[Template] =
+  @inline override def findById(id: IdOptionLong): Option[$className] =
     id.value.map(theCache.get).getOrElse { run { queryById(id) }.headOption }
 }

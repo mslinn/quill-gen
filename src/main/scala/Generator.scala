@@ -20,13 +20,27 @@ class Generator(implicit options: ProgramOptions) {
 
   protected lazy val template: String = io.Source.fromResource("Template.scala").mkString
 
-  def run(): Unit =
+  protected def extendString(className: String): String = options.cacheType match {
+    case CacheType.NONE =>
+      s"UnCachedPersistence[Long, Option[Long], $className]"
+
+    case CacheType.SOFT =>
+      s"""CachedPersistence[Long, Option[Long], $className]
+         |    with SoftCacheLike[Long, Option[Long], $className]""".stripMargin
+
+    case CacheType.STRONG =>
+      s"""CachedPersistence[Long, Option[Long], $className]
+         |    with StrongCacheLike[Long, Option[Long], $className]""".stripMargin
+  }
+
+  def run(): Unit = {
     options.classNames foreach { className =>
-      val result =
-        template
-          .replace("Template", className)
-          .replace("package model.dao", s"package ${ options.packageName }")
+      val result = template
+                     .replace("$className", className)
+                     .replace("$package", options.packageName)
+                     .replace("$extend", extendString(className))
       Files.createDirectories(outputDirectory.toPath)
       Generator.write(result, outputPathFQ(className))
     }
+  }
 }
