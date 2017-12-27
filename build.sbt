@@ -1,9 +1,48 @@
+cancelable := true
+
+developers := List(
+  Developer("mslinn",
+            "Mike Slinn",
+            "mslinn@micronauticsresearch.com",
+            url("https://github.com/mslinn")
+  )
+)
+
+// define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
+initialCommands in console := """
+                                |""".stripMargin
+
+javacOptions ++= Seq(
+  "-Xlint:deprecation",
+  "-Xlint:unchecked",
+  "-source", "1.8",
+  "-target", "1.8",
+  "-g:vars"
+)
+
+libraryDependencies ++= Seq(
+  "com.github.scopt"  %% "scopt"       % "3.7.0" withSources(),
+  "org.scalatest"     %% "scalatest"   % "3.0.4" % "test" withSources(),
+  "junit"             %  "junit"       % "4.12"  % "test"
+)
+
+licenses +=  ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+
+logLevel := Level.Warn
+
+// Only show warnings and errors on the screen for compilations.
+// This applies to both test:compile and compile and is Info by default
+logLevel in compile := Level.Warn
+
+// Level.INFO is needed to see detailed output when running tests
+logLevel in test := Level.Info
 
 name := "quill-gen"
+
 organization := "com.micronautics"
-version := "0.2.0"
-licenses +=  ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-scalaVersion := "2.12.4"
+
+resolvers ++= Seq(
+)
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -27,22 +66,18 @@ scalacOptions in (Compile, doc) ++= baseDirectory.map {
   )
 }.value
 
-javacOptions ++= Seq(
-  "-Xlint:deprecation",
-  "-Xlint:unchecked",
-  "-source", "1.8",
-  "-target", "1.8",
-  "-g:vars"
+scalaVersion := "2.12.4"
+
+scmInfo := Some(
+  ScmInfo(
+    url(s"https://github.com/mslinn/$name"),
+    s"git@github.com:mslinn/$name.git"
+  )
 )
 
-resolvers ++= Seq(
-)
+sublimeTransitive := true
 
-libraryDependencies ++= Seq(
-  "com.github.scopt"  %% "scopt"       % "3.5.0" withSources(),
-  "org.scalatest"     %% "scalatest"   % "3.0.1" % "test" withSources(),
-  "junit"             %  "junit"       % "4.12"  % "test"
-)
+version := "0.2.0"
 
 lazy val root = (project in file(".")).
   enablePlugins(BuildInfoPlugin).
@@ -57,21 +92,3 @@ assemblyMergeStrategy in assembly := {
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
 }
-
-
-logLevel := Level.Warn
-
-// Only show warnings and errors on the screen for compilations.
-// This applies to both test:compile and compile and is Info by default
-logLevel in compile := Level.Warn
-
-// Level.INFO is needed to see detailed output when running tests
-logLevel in test := Level.Info
-
-// define the statements initially evaluated when entering 'console', 'console-quick', but not 'console-project'
-initialCommands in console := """
-                                |""".stripMargin
-
-cancelable := true
-
-sublimeTransitive := true
